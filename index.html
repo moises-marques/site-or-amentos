@@ -31,27 +31,29 @@
           <input id="cliente_nome" class="border p-2 w-full" placeholder="Nome do cliente">
         </div>
         <div>
-      <label class="block text-sm font-medium">Telefone (com DDD)</label>
-      <input id="telefone" type="tel" inputmode="tel" class="border p-2 w-full" placeholder="ex: 92 98877-6655">
+          <label class="block text-sm font-medium">Telefone (com DDD)</label>
+          <input id="telefone" type="tel" inputmode="tel" class="border p-2 w-full" placeholder="ex: 92 98877-6655">
         </div>
       </div>
 
       <h3 class="mt-4 font-semibold">Itens</h3>
 
-      <table class="w-full mt-2 text-sm" id="tabela_itens">
-        <thead>
-            <tr class="text-left">
-                <th>Item</th>
-                <th>Qtd</th>
-                <th>Descrição</th>
-                <th>Preço unit.</th>
-                <th>Total</th>
-                <th></th>
-            </tr>
-        </thead>
+      <div class="tabela-itens-wrapper">
+        <table class="w-full mt-2 text-sm" id="tabela_itens">
+          <thead>
+              <tr class="text-left">
+                  <th>Item</th>
+                  <th>Qtd</th>
+                  <th>Descrição</th>
+                  <th>Preço unit.</th>
+                  <th>Total</th>
+                  <th></th>
+              </tr>
+          </thead>
 
-        <tbody id="itens_body"></tbody>
-      </table>
+          <tbody id="itens_body"></tbody>
+        </table>
+      </div>
 
       <div class="mt-2 flex gap-2">
         <button id="btn_add" class="bg-blue-600 text-white px-3 py-1 rounded">+ Adicionar item</button>

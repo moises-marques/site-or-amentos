@@ -1,13 +1,94 @@
 body {
   background: #f3f4f6;
+  margin: 0;
+  font-family: Arial, sans-serif;
 }
 
 .invoice {
   background: #fff;
   padding: 20px;
   border-radius: 8px;
+  max-width: 800px;
+  margin: 20px auto;
+  box-sizing: border-box;
 }
 
-input, textarea {
+input,
+textarea {
   outline: none;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+th, td {
+  text-align: left;
+  padding: 8px;
+  border-bottom: 1px solid #ddd;
+  white-space: nowrap; /* evita quebra feia em colunas pequenas */
+}
+
+thead {
+  background: #f9fafb;
+  font-weight: bold;
+}
+
+.tabela-itens-wrapper {
+  width: 100%;
+  overflow-x: auto; /* ativa rolagem lateral no celular */
+}
+
+button {
+  display: inline-block;
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+button:hover {
+  background: #0056b3;
+}
+
+/* === RESPONSIVIDADE === */
+@media (max-width: 600px) {
+  .invoice {
+    padding: 15px;
+    border-radius: 0;
+  }
+
+  h2, h3 {
+    font-size: 18px;
+  }
+
+  th, td {
+    font-size: 14px;
+    padding: 6px;
+  }
+
+  button {
+    width: 100%;
+    font-size: 15px;
+    margin-top: 10px;
+  }
+
+  /* deixa os inputs mais espaçados e legíveis */
+  input, textarea {
+    font-size: 15px;
+    padding: 8px;
+  }
+
+  /* tabela com rolagem suave no celular */
+  .tabela-itens-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
 }
