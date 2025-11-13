@@ -1,4 +1,4 @@
-body {
+body { 
   background: #f3f4f6;
   margin: 0;
   font-family: Arial, sans-serif;
@@ -30,17 +30,12 @@ th, td {
   text-align: left;
   padding: 8px;
   border-bottom: 1px solid #ddd;
-  white-space: nowrap; /* evita quebra feia em colunas pequenas */
+  white-space: nowrap;
 }
 
 thead {
   background: #f9fafb;
   font-weight: bold;
-}
-
-.tabela-itens-wrapper {
-  width: 100%;
-  overflow-x: auto; /* ativa rolagem lateral no celular */
 }
 
 button {
@@ -72,6 +67,7 @@ button:hover {
   th, td {
     font-size: 14px;
     padding: 6px;
+    white-space: normal; /* deixa quebrar linha */
   }
 
   button {
@@ -80,15 +76,47 @@ button:hover {
     margin-top: 10px;
   }
 
-  /* deixa os inputs mais espaçados e legíveis */
   input, textarea {
     font-size: 15px;
     padding: 8px;
   }
 
-  /* tabela com rolagem suave no celular */
-  .tabela-itens-wrapper {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
+  /* --- Ajuste da tabela para celular --- */
+  table, thead, tbody, th, td, tr {
+    display: block;
+  }
+
+  thead tr {
+    display: none; /* esconde cabeçalho pra visual simples */
+  }
+
+  tbody tr {
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 8px;
+    background: #fafafa;
+  }
+
+  td {
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    padding: 6px 10px;
+    border: none;
+    font-size: 14px;
+  }
+
+  td::before {
+    content: attr(data-label);
+    font-weight: bold;
+    text-align: left;
+  }
+
+  /* centraliza preço e total */
+  td:nth-child(4),
+  td:nth-child(5) {
+    justify-content: center;
+    text-align: center;
   }
 }

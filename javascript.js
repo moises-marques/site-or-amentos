@@ -56,7 +56,7 @@ document.getElementById('btn_add').addEventListener('click', () => addItem(1, 'I
 
 document.getElementById('btn_reset').addEventListener('click', () => {
   document.getElementById('cliente_nome').value = '';
-  document.getElementById('cliente_contato').value = '';
+  document.getElementById('telefone').value = '';
   document.getElementById('mensagem').value = 'Obrigado pelo contato. Prazo X dias. Validade deste orçamento: 7 dias.';
   itensBody.innerHTML = '';
   updateTotals();
@@ -85,6 +85,30 @@ document.getElementById('btn_whatsapp').addEventListener('click', () => {
   const msg = encodeURIComponent(`Olá ${cliente}, segue orçamento — total R$ ${total}. Quer confirmar? (responda aqui)`);
   window.open(`https://wa.me/?text=${msg}`, '_blank');
 });
+
+// === Ajuste automático de data-label na tabela (modo celular) ===
+function atualizarDataLabels() {
+  const tabela = document.getElementById('tabela_itens');
+  const cabecalhos = Array.from(tabela.querySelectorAll('thead th')).map(th => th.textContent.trim());
+  const linhas = tabela.querySelectorAll('tbody tr');
+
+  linhas.forEach(linha => {
+    const celulas = linha.querySelectorAll('td');
+    celulas.forEach((td, i) => {
+      if (cabecalhos[i]) {
+        td.setAttribute('data-label', cabecalhos[i]);
+      }
+    });
+  });
+}
+
+// roda toda vez que os itens forem atualizados
+const observer = new MutationObserver(atualizarDataLabels);
+observer.observe(document.getElementById('itens_body'), { childList: true, subtree: true });
+
+// roda na carga inicial também
+window.addEventListener('load', atualizarDataLabels);
+
 
 // inicial
 addItem('Produto A', 1, 'Exemplo de serviço', 120.00);
