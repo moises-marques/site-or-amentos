@@ -52,7 +52,8 @@ function updateTotals() {
   totalEl.textContent = formatBR(subtotal);
 }
 
-document.getElementById('btn_add').addEventListener('click', () => addItem(1, 'Item descrito', 0.00));
+document.getElementById('btn_add').addEventListener('click', () => addItem('Item descrito', 1, '', 0.00));
+
 
 document.getElementById('btn_reset').addEventListener('click', () => {
   document.getElementById('cliente_nome').value = '';
