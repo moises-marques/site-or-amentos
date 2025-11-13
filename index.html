@@ -3,80 +3,78 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Gerador de Orçamento — MVP</title>
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <title>Gerador de Orçamento — Simples</title>
   <link rel="stylesheet" href="style.css">
 </head>
-<body class="p-6">
-  <div class="max-w-3xl mx-auto">
-    <h1 class="text-2xl font-bold mb-4">Gerador de Orçamento (MVP)</h1>
+
+<body>
+  <div class="container">
+    <h1>Gerador de Orçamento</h1>
 
     <div class="invoice" id="invoice">
-      <div class="flex justify-between items-start">
+
+      <div class="header-grid">
         <div>
-          <h2 class="text-lg font-semibold">Sua Empresa</h2>
+          <h2>Sua Empresa</h2>
           <div id="empresa_dados">Rua Exemplo, Cidade — (00) 00000-0000</div>
         </div>
+
         <div class="text-right">
           <div>Orçamento #<span id="orc_id">1</span></div>
           <div id="data"></div>
         </div>
       </div>
 
-      <hr class="my-4">
+      <hr>
 
-      <div class="grid grid-cols-2 gap-4">
+      <div class="form-grid">
         <div>
-          <label class="block text-sm font-medium">Cliente</label>
-          <input id="cliente_nome" class="border p-2 w-full" placeholder="Nome do cliente">
+          <label>Cliente</label>
+          <input id="cliente_nome" placeholder="Nome do cliente">
         </div>
+
         <div>
-          <label class="block text-sm font-medium">Telefone (com DDD)</label>
-          <input id="telefone" type="tel" inputmode="tel" class="border p-2 w-full" placeholder="ex: 92 98877-6655">
+          <label>Telefone (DDD)</label>
+          <input id="telefone" type="tel" inputmode="tel" placeholder="92 98877-6655">
         </div>
       </div>
 
-      <h3 class="mt-4 font-semibold">Itens</h3>
+      <h3 class="titulo-itens">Itens</h3>
 
-    
-        <table class="w-full mt-2 text-sm" id="tabela_itens">
+      <div class="table-wrapper">
+        <table id="tabela_itens">
           <thead>
-              <tr class="text-left">
-                  <th>Item</th>
-                  <th>Qtd</th>
-                  <th>Descrição</th>
-                  <th>Preço unit.</th>
-                  <th>Total</th>
-                  <th></th>
-              </tr>
+            <tr>
+              <th>Item</th>
+              <th>Qtd</th>
+              <th>Descrição</th>
+              <th>Preço unit.</th>
+              <th>Total</th>
+              <th></th>
+            </tr>
           </thead>
-
           <tbody id="itens_body"></tbody>
         </table>
-     
-
-      <div class="mt-2 flex gap-2">
-        <button id="btn_add" class="bg-blue-600 text-white px-3 py-1 rounded">+ Adicionar item</button>
       </div>
 
-      <div class="mt-4 text-right">
-        <div class="text-lg">Subtotal: R$ <span id="subtotal">0.00</span></div>
-        <div class="text-2xl font-bold">Total: R$ <span id="total">0.00</span></div>
+      <button id="btn_add" class="btn btn-blue">+ Adicionar item</button>
+
+      <div class="totais">
+        <div>Subtotal: R$ <span id="subtotal">0.00</span></div>
+        <div class="total"><strong>Total: R$ <span id="total">0.00</span></strong></div>
       </div>
 
-      <div class="mt-4">
-        <label class="block text-sm">Mensagem</label>
-        <textarea id="mensagem" class="border p-2 w-full" rows="3">Obrigado pelo contato. Prazo X dias. Validade deste orçamento: 7 dias.</textarea>
-      </div>
+      <label>Mensagem</label>
+      <textarea id="mensagem" rows="3">Obrigado pelo contato. Validade 7 dias.</textarea>
+
     </div>
 
-    <div class="mt-4 flex gap-2">
-      <button id="btn_pdf" class="bg-green-600 text-white px-4 py-2 rounded">Gerar PDF & Baixar</button>
-      <button id="btn_whatsapp" class="bg-green-700 text-white px-4 py-2 rounded">Abrir WhatsApp com mensagem</button>
-      <button id="btn_reset" class="bg-gray-500 text-white px-4 py-2 rounded">Limpar</button>
+    <div class="actions">
+      <button id="btn_pdf" class="btn btn-green">Gerar PDF</button>
+      <button id="btn_whatsapp" class="btn btn-green-dark">WhatsApp</button>
+      <button id="btn_reset" class="btn btn-gray">Limpar</button>
     </div>
 
-   
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
