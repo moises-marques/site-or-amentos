@@ -1,0 +1,13 @@
+body {
+  background: #f3f4f6;
+}
+
+.invoice {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+input, textarea {
+  outline: none;
+}
