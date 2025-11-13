@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Gerador de Orçamento — MVP</title>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+<style>
+  body { background:#f3f4f6; }
+  .invoice { background:#fff; padding:20px; border-radius:8px; }
+  input, textarea { outline: none; }
+</style>
+</head>
+<body class="p-6">
+  <div class="max-w-3xl mx-auto">
+    <h1 class="text-2xl font-bold mb-4">Gerador de Orçamento (MVP)</h1>
+
+    <div class="invoice" id="invoice">
+      <div class="flex justify-between items-start">
+        <div>
+          <h2 class="text-lg font-semibold">Sua Empresa</h2>
+          <div id="empresa_dados">Rua Exemplo, Cidade — (00) 00000‑0000</div>
+        </div>
+        <div class="text-right">
+          <div>Orçamento #<span id="orc_id">1</span></div>
+          <div id="data"><?= </div>
+        </div>
+      </div>
+
+      <hr class="my-4">
+
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <label class="block text-sm font-medium">Cliente</label>
+          <input id="cliente_nome" class="border p-2 w-full" placeholder="Nome do cliente">
+        </div>
+        <div>
+          <label class="block text-sm font-medium">E-mail / Telefone</label>
+          <input id="cliente_contato" class="border p-2 w-full" placeholder="email ou telefone">
+        </div>
+      </div>
+
+      <h3 class="mt-4 font-semibold">Itens</h3>
+
+      <table class="w-full mt-2 text-sm" id="tabela_itens">
+        <thead>
+          <tr class="text-left">
+            <th>Qtd</th><th>Descrição</th><th>Preço unit.</th><th>Total</th><th></th>
+          </tr>
+        </thead>
+        <tbody id="itens_body">
+        </tbody>
+      </table>
+
+      <div class="mt-2 flex gap-2">
+        <button id="btn_add" class="bg-blue-600 text-white px-3 py-1 rounded">+ Adicionar item</button>
+      </div>
+
+      <div class="mt-4 text-right">
+        <div class="text-lg">Subtotal: R$ <span id="subtotal">0.00</span></div>
+        <div class="text-2xl font-bold">Total: R$ <span id="total">0.00</span></div>
+      </div>
+
+      <div class="mt-4">
+        <label class="block text-sm">Mensagem</label>
+        <textarea id="mensagem" class="border p-2 w-full" rows="3">Obrigado pelo contato. Prazo X dias. Validade deste orçamento: 7 dias.</textarea>
+      </div>
+    </div>
+
+    <div class="mt-4 flex gap-2">
+      <button id="btn_pdf" class="bg-green-600 text-white px-4 py-2 rounded">Gerar PDF & Baixar</button>
+      <button id="btn_whatsapp" class="bg-green-700 text-white px-4 py-2 rounded">Abrir WhatsApp com mensagem</button>
+      <button id="btn_reset" class="bg-gray-500 text-white px-4 py-2 rounded">Limpar</button>
+    </div>
+
+    <p class="mt-6 text-sm text-gray-600">Como vender: compartilhe por WhatsApp/Instagram o link do site (GitHub Pages). Cobrança por Pix/transferência na conversa.</p>
+  </div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+const { jsPDF } = window.jspdf;
+
+let itemIndex = 0;
+const itensBody = document.getElementById('itens_body');
+const subtotalEl = document.getElementById('subtotal');
+const totalEl = document.getElementById('total');
+
+function formatBR(value){
+  return Number(value || 0).toFixed(2).replace('.',',');
+}
+function parseNum(v){ return Number(String(v).replace(',','.')) || 0; }
+
+function addItem(qty=1, desc='', price=0){
+  itemIndex++;
+  const tr = document.createElement('tr');
+  tr.dataset.idx = itemIndex;
+  tr.innerHTML = `
+    <td><input class="border p-1 w-16" value="${qty}" data-field="qty"></td>
+    <td><input class="border p-1 w-full" value="${desc}" data-field="desc"></td>
+    <td><input class="border p-1 w-28 text-right" value="${price.toFixed(2)}" data-field="price"></td>
+    <td class="text-right" data-field="line_total">R$ 0,00</td>
+    <td><button data-action="remove" class="text-red-600">✖</button></td>
+  `;
+  itensBody.appendChild(tr);
+
+  tr.querySelectorAll('input').forEach(inp => {
+    inp.addEventListener('input', () => updateTotals());
+  });
+  tr.querySelector('[data-action="remove"]').addEventListener('click', () => {
+    tr.remove(); updateTotals();
+  });
+
+  updateTotals();
+}
+
+function updateTotals(){
+  let subtotal = 0;
+  document.querySelectorAll('#itens_body tr').forEach(tr => {
+    const qty = parseNum(tr.querySelector('[data-field="qty"]').value);
+    const price = parseNum(tr.querySelector('[data-field="price"]').value);
+    const line = qty * price;
+    tr.querySelector('[data-field="line_total"]').textContent = 'R$ ' + formatBR(line);
+    subtotal += line;
+  });
+  subtotalEl.textContent = formatBR(subtotal);
+  totalEl.textContent = formatBR(subtotal);
+}
+
+document.getElementById('btn_add').addEventListener('click', ()=> addItem(1,'Item descrito',0.00));
+document.getElementById('btn_reset').addEventListener('click', ()=>{
+  document.getElementById('cliente_nome').value='';
+  document.getElementById('cliente_contato').value='';
+  document.getElementById('mensagem').value='Obrigado pelo contato. Prazo X dias. Validade deste orçamento: 7 dias.';
+  itensBody.innerHTML=''; updateTotals();
+});
+
+document.getElementById('btn_pdf').addEventListener('click', async ()=>{
+  const invoiceEl = document.getElementById('invoice');
+  // Temporarily expand width for high quality
+  const originalWidth = invoiceEl.style.width;
+  invoiceEl.style.width = '800px';
+  const canvas = await html2canvas(invoiceEl, { scale: 2 });
+  invoiceEl.style.width = originalWidth;
+
+  const imgData = canvas.toDataURL('image/png');
+  const pdf = new jsPDF('p', 'pt', 'a4');
+  const pageWidth = pdf.internal.pageSize.getWidth();
+  const pageHeight = pdf.internal.pageSize.getHeight();
+  // Calculate ratio
+  const imgProps = canvas;
+  const imgWidth = pageWidth - 40;
+  const imgHeight = (canvas.height * imgWidth) / canvas.width;
+  pdf.addImage(imgData, 'PNG', 20, 20, imgWidth, imgHeight);
+  const fname = `orcamento_${Date.now()}.pdf`;
+  pdf.save(fname);
+});
+
+document.getElementById('btn_whatsapp').addEventListener('click', ()=>{
+  const cliente = document.getElementById('cliente_nome').value || '[cliente]';
+  const total = totalEl.textContent || '0,00';
+  const msg = encodeURIComponent(`Olá ${cliente}, segue orçamento — total R$ ${total}. Quer confirmar? (responda aqui)`);
+  // abre WhatsApp web / app
+  window.open(`https://wa.me/?text=${msg}`, '_blank');
+});
+
+// inicial
+addItem(1,'Exemplo de serviço',120.00);
+updateTotals();
+</script>
+</body>
+</html>
