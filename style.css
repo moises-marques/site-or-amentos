@@ -131,3 +131,36 @@ body.pdf-mode th {
   width: 100% !important;
   white-space: nowrap !important;
 }
+
+                            /* IMPRESSAO EM A4 */
+
+/* Modo impressão A4 */
+@media print {
+
+  body {
+    margin: 0;
+    padding: 0;
+    background: white;
+  }
+
+  #invoice {
+      position: relative;
+      max-width: 200mm;
+      width: 100%; 
+      padding: 20mm 10mm; 
+      margin: 0 auto; 
+      background: white;
+      right: 30px;
+  }
+
+  /* Esconde botões na impressão */
+  body.print-mode .actions {
+    display: none;
+  }
+
+  /* Garantir qualidade */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+}

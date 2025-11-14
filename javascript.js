@@ -78,6 +78,21 @@ document.getElementById("btn_pdf").addEventListener("click", async () => {
   pdf.save("orcamento.pdf");
 });
 
+/* IMPRESSÃO A4 */
+document.getElementById("btn_print").addEventListener("click", () => {
+  const invoice = document.getElementById("invoice");
+
+  // Adiciona classe especial para impressão
+  document.body.classList.add("print-mode");
+
+  // Garante que o layout está atualizado antes de abrir o print
+  setTimeout(() => {
+    window.print();
+    document.body.classList.remove("print-mode");
+  }, 300);
+});
+
+
 /* WHATSAPP */
 document.getElementById("btn_whatsapp").addEventListener("click", () => {
   const cliente = document.getElementById("cliente_nome").value;
