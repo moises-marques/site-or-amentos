@@ -114,6 +114,10 @@ th, td {
   table th, table td {
     font-size: 14px;
   }
+
+  #btn_reset {
+      margin-top: 10px; /* Adiciona 10 pixels de espaço em cima */
+  }
 }
 
 /* MODO PDF — definitivo */

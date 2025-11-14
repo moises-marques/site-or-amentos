@@ -29,10 +29,10 @@ document.getElementById("btn_add").addEventListener("click", () => {
   tr.className = "linha-item";
 
   tr.innerHTML = `
-    <td><input class="item-nome" value=""></td>
-    <td><input class="qtd" type="number" value=""></td>
+    <td><input class="item-nome" placeholder="Produto A"></td>
+    <td><input class="qtd" type="number" placeholder="1"></td>
     <td><input class="desc" placeholder="Descrição"></td>
-    <td><input class="preco" type="number" value=""></td>
+    <td><input class="preco" type="number" placeholder="0"></td>
     <td>R$ <span class="total-item">0.00</span></td>
     <td><button class="btn btn-gray btn-del">X</button></td>
   `;
