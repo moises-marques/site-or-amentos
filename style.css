@@ -120,9 +120,23 @@ th, td {
   }
 }
 
-/* MODO PDF — definitivo */
+                       /* MODO PDF — definitivo */
+
 body.pdf-mode * {
   overflow: visible !important;
+}
+
+/* NOVO: Impede quebra de página dentro de uma linha da tabela */
+body.pdf-mode #itens_body tr {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+}
+
+/* NOVO: Garante que as células da tabela tenham altura flexível */
+body.pdf-mode td {
+    /* Garante que o TD seja exibido */
+    display: table-cell !important;
+    height: auto !important; /* Importante para que a quebra ocorra entre as linhas */
 }
 
 /* NOVO: Esconde todos os botões e inputs de interação no PDF */
