@@ -125,46 +125,52 @@ body.pdf-mode * {
   overflow: visible !important;
 }
 
+/* NOVO: Esconde todos os botões e inputs de interação no PDF */
+body.pdf-mode button,
+body.pdf-mode .btn,
+body.pdf-mode input,
+body.pdf-mode textarea {
+    /* Oculta os elementos interativos */
+    display: none !important;
+}
+
+/* NOVO: Regras para que o conteúdo seja visível (Obrigatório) */
 body.pdf-mode .table-wrapper {
     overflow-x: visible !important;
+}
+body.pdf-mode .invoice {
+    overflow: visible !important;
+    height: auto !important; /* Remove qualquer limite de altura */
+}
+
+/* NOVO: Mostra os valores estáticos da tabela */
+body.pdf-mode table,
+body.pdf-mode thead,
+body.pdf-mode tbody,
+body.pdf-mode tr,
+body.pdf-mode th {
+    display: table !important;
     width: 100% !important;
 }
 
-body.pdf-mode .invoice {
-    /* Garante que o contêiner do orçamento use o máximo de largura do A4 */
-    max-width: 794px !important; /* Largura de uma folha A4 em retrato */
+/* NOVO: Garante que os spans de valor sejam exibidos, substituindo inputs */
+body.pdf-mode td {
+    /* Garante que o TD seja exibido */
+    display: table-cell !important;
 }
 
-/* NOVO: Comprime as colunas para que caibam no A4 (PDF) */
-body.pdf-mode table {
-    table-layout: fixed; /* Força o layout da tabela a respeitar as larguras */
+body.pdf-mode td span,
+body.pdf-mode td input {
+    /* Garante que os SPANs (onde o valor estático aparecerá) sejam visíveis */
+    display: block !important;
+    border: none !important;
+    padding: 0 !important;
 }
 
-body.pdf-mode #tabela_itens th:nth-child(1), /* Item */
-body.pdf-mode #tabela_itens td:nth-child(1) {
-    width: 25%; 
+/* Oculta o cabeçalho 'Item' extra na última coluna (Botão X) */
+body.pdf-mode table th:last-child {
+    display: none !important;
 }
-body.pdf-mode #tabela_itens th:nth-child(2), /* Qtd */
-body.pdf-mode #tabela_itens td:nth-child(2) {
-    width: 10%; 
-}
-body.pdf-mode #tabela_itens th:nth-child(3), /* Descrição */
-body.pdf-mode #tabela_itens td:nth-child(3) {
-    width: 35%; 
-}
-body.pdf-mode #tabela_itens th:nth-child(4), /* Preço unit. */
-body.pdf-mode #tabela_itens td:nth-child(4) {
-    width: 15%; 
-}
-body.pdf-mode #tabela_itens th:nth-child(5), /* Total */
-body.pdf-mode #tabela_itens td:nth-child(5) {
-    width: 15%; 
-}
-body.pdf-mode #tabela_itens th:nth-child(6), /* Botão X (Ações) */
-body.pdf-mode #tabela_itens td:nth-child(6) {
-    display: none; /* Esconde o botão "X" na impressão */
-}
-
                             /* IMPRESSAO EM A4 */
 
 /* Modo impressão A4 */
