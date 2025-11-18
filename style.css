@@ -168,3 +168,78 @@ body.pdf-mode th {
     print-color-adjust: exact !important;
   }
 }
+
+body {
+      margin: 0;
+      background: #f3f4f6;
+      font-family: Arial, sans-serif;
+      color: #111;
+    }
+
+    .hero {
+      max-width: 900px;
+      margin: auto;
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 32px;
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
+
+    p {
+      font-size: 18px;
+      margin-bottom: 25px;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 12px 22px;
+      background: #2563eb;
+      color: white;
+      text-decoration: none;
+      border-radius: 6px;
+      font-size: 18px;
+      margin-top: 10px;
+    }
+
+    .btn-green {
+      background: #16a34a;
+    }
+
+    .box {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 25px;
+      background: white;
+      border-radius: 8px;
+      text-align: center;
+    }
+
+    footer {
+      margin-top: 40px;
+      padding: 20px;
+      text-align: center;
+      color: #555;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f3f4f6;
+      margin: 0;
+      padding: 20px;
+      text-align: center;
+    }
+    .box {
+      background: white;
+      padding: 20px;
+      margin: auto;
+      max-width: 400px;
+      border-radius: 8px;
+    }
+    #qrcode {
+      margin-top: 20px;
+    }
+  

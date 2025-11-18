@@ -102,3 +102,6 @@ document.getElementById("btn_whatsapp").addEventListener("click", () => {
 
   window.open(`https://wa.me/?text=${encodeURIComponent(texto)}`);
 });
+
+
+
