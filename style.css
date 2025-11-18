@@ -122,42 +122,37 @@ th, td {
 
                        /* MODO PDF — definitivo */
 
+body.pdf-mode {
+    /* Garante que o corpo não tenha scroll e o conteúdo se expanda */
+    overflow: visible !important;
+    padding: 0;
+    margin: 0;
+}
+
 body.pdf-mode * {
-  overflow: visible !important;
+    overflow: visible !important;
 }
 
-/* NOVO: Impede quebra de página dentro de uma linha da tabela */
-body.pdf-mode #itens_body tr {
-    page-break-inside: avoid !important;
-    break-inside: avoid !important;
-}
-
-/* NOVO: Garante que as células da tabela tenham altura flexível */
-body.pdf-mode td {
-    /* Garante que o TD seja exibido */
-    display: table-cell !important;
-    height: auto !important; /* Importante para que a quebra ocorra entre as linhas */
-}
-
-/* NOVO: Esconde todos os botões e inputs de interação no PDF */
 body.pdf-mode button,
 body.pdf-mode .btn,
 body.pdf-mode input,
-body.pdf-mode textarea {
-    /* Oculta os elementos interativos */
+body.pdf-mode textarea,
+body.pdf-mode .actions {
     display: none !important;
 }
 
-/* NOVO: Regras para que o conteúdo seja visível (Obrigatório) */
-body.pdf-mode .table-wrapper {
-    overflow-x: visible !important;
+
+body.pdf-mode .container {
+    padding: 20px;
 }
 body.pdf-mode .invoice {
     overflow: visible !important;
-    height: auto !important; /* Remove qualquer limite de altura */
-}
+    height: auto !important; }
 
-/* NOVO: Mostra os valores estáticos da tabela */
+
+body.pdf-mode .table-wrapper {
+    overflow-x: visible !important;
+}
 body.pdf-mode table,
 body.pdf-mode thead,
 body.pdf-mode tbody,
@@ -167,23 +162,40 @@ body.pdf-mode th {
     width: 100% !important;
 }
 
-/* NOVO: Garante que os spans de valor sejam exibidos, substituindo inputs */
-body.pdf-mode td {
-    /* Garante que o TD seja exibido */
-    display: table-cell !important;
+
+body.pdf-mode #itens_body tr {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
 }
 
-body.pdf-mode td span,
-body.pdf-mode td input {
-    /* Garante que os SPANs (onde o valor estático aparecerá) sejam visíveis */
+
+body.pdf-mode td {
+    display: table-cell !important;
+    height: auto !important; 
+    vertical-align: top !important; 
+}
+
+body.pdf-mode td span {
     display: block !important;
     border: none !important;
     padding: 0 !important;
 }
 
-/* Oculta o cabeçalho 'Item' extra na última coluna (Botão X) */
+
 body.pdf-mode table th:last-child {
     display: none !important;
+}
+
+
+body.pdf-mode .totais {
+    margin-top: 30px !important; 
+    page-break-before: auto !important;
+    page-break-after: auto !important;
+}
+
+
+body.pdf-mode label:has(+ textarea) {
+    page-break-before: auto !important;
 }
                             /* IMPRESSAO EM A4 */
 
