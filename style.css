@@ -243,3 +243,24 @@ body {
       margin-top: 20px;
     }
   
+                                 /* PDF CELULAR */
+
+
+  /* CORREÇÃO PARA PDF NO CELULAR */
+@media screen and (max-width: 900px) {
+  body.pdf-mode .table-wrapper {
+    overflow: visible !important;
+  }
+
+  body.pdf-mode table {
+    width: 100% !important;
+    display: block !important;
+  }
+
+  body.pdf-mode tr, 
+  body.pdf-mode td, 
+  body.pdf-mode th {
+    white-space: normal !important;
+    height: auto !important;
+  }
+}
