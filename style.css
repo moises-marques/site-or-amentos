@@ -125,15 +125,44 @@ body.pdf-mode * {
   overflow: visible !important;
 }
 
-body.pdf-mode table,
-body.pdf-mode thead,
-body.pdf-mode tbody,
-body.pdf-mode tr,
-body.pdf-mode td,
-body.pdf-mode th {
-  display: table !important;
-  width: 100% !important;
-  white-space: nowrap !important;
+body.pdf-mode .table-wrapper {
+    overflow-x: visible !important;
+    width: 100% !important;
+}
+
+body.pdf-mode .invoice {
+    /* Garante que o contêiner do orçamento use o máximo de largura do A4 */
+    max-width: 794px !important; /* Largura de uma folha A4 em retrato */
+}
+
+/* NOVO: Comprime as colunas para que caibam no A4 (PDF) */
+body.pdf-mode table {
+    table-layout: fixed; /* Força o layout da tabela a respeitar as larguras */
+}
+
+body.pdf-mode #tabela_itens th:nth-child(1), /* Item */
+body.pdf-mode #tabela_itens td:nth-child(1) {
+    width: 25%; 
+}
+body.pdf-mode #tabela_itens th:nth-child(2), /* Qtd */
+body.pdf-mode #tabela_itens td:nth-child(2) {
+    width: 10%; 
+}
+body.pdf-mode #tabela_itens th:nth-child(3), /* Descrição */
+body.pdf-mode #tabela_itens td:nth-child(3) {
+    width: 35%; 
+}
+body.pdf-mode #tabela_itens th:nth-child(4), /* Preço unit. */
+body.pdf-mode #tabela_itens td:nth-child(4) {
+    width: 15%; 
+}
+body.pdf-mode #tabela_itens th:nth-child(5), /* Total */
+body.pdf-mode #tabela_itens td:nth-child(5) {
+    width: 15%; 
+}
+body.pdf-mode #tabela_itens th:nth-child(6), /* Botão X (Ações) */
+body.pdf-mode #tabela_itens td:nth-child(6) {
+    display: none; /* Esconde o botão "X" na impressão */
 }
 
                             /* IMPRESSAO EM A4 */
@@ -247,7 +276,7 @@ body {
 
 
   /* CORREÇÃO PARA PDF NO CELULAR */
-@media screen and (max-width: 900px) {
+/* @media screen and (max-width: 900px) {
   body.pdf-mode .table-wrapper {
     overflow: visible !important;
   }
@@ -263,4 +292,4 @@ body {
     white-space: normal !important;
     height: auto !important;
   }
-}
+} */
