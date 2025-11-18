@@ -96,7 +96,7 @@ th, td {
 }
 
 /* RESPONSIVIDADE */
-@media (max-width: 600px) {
+@media (max-width: 900px) {
   .form-grid {
     grid-template-columns: 1fr;
   }
