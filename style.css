@@ -172,12 +172,12 @@ body.pdf-mode #itens_body tr {
     display: table-row !important;
 }
 
-/* CONSOLIDAÇÃO: Garante que as células da tabela tenham altura flexível e mostrem o texto */
-body.pdf-mode td {
+
+/* body.pdf-mode td {
     display: table-cell !important;
-    height: auto !important; /* CRÍTICO: Permite que a altura da linha seja calculada */
+    height: auto !important; 
     vertical-align: top !important; 
-}
+} */
 
 body.pdf-mode td span {
     display: block !important;

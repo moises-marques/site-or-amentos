@@ -58,7 +58,8 @@ document.getElementById("btn_reset").addEventListener("click", () => {
     atualizarTotais();
 });
 
-/* PDF DEFINITIVO (CORRIGIDO PARA PAGINAÇÃO E MODO CELULAR) */
+                   /* PDF DEFINITIVO (CORRIGIDO PARA PAGINAÇÃO E MODO CELULAR) */
+
 document.getElementById("btn_pdf").addEventListener("click", async () => {
     const invoice = document.getElementById("invoice");
     document.body.classList.add("pdf-mode");
@@ -103,11 +104,12 @@ document.getElementById("btn_pdf").addEventListener("click", async () => {
     
     // Oculta o campo de mensagem interativo e mostra só o texto
     const mensagem_input = document.getElementById('mensagem');
+    
     mensagem_input.style.display = 'none';
     mensagem_input.parentElement.insertAdjacentHTML('beforeend', `<p>${mensagem_input.value}</p>`);
 
 
-    await new Promise(r => setTimeout(r, 300)); // Espera o layout estabilizar
+    await new Promise(r => setTimeout(r, 500)); // Espera o layout estabilizar
 
     // A CAPTURA VAI ACONTECER COM TODOS OS ITENS VISÍVEIS (expansão)
     const canvas = await html2canvas(invoice, { scale: 2 });
@@ -141,7 +143,8 @@ document.getElementById("btn_pdf").addEventListener("click", async () => {
     pdf.save("orcamento.pdf");
 });
 
-/* IMPRESSÃO A4 */
+                                       /* IMPRESSÃO A4 */
+
 document.getElementById("btn_print").addEventListener("click", () => {
     const invoice = document.getElementById("invoice");
 
