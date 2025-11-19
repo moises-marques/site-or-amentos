@@ -315,6 +315,15 @@ body {
                           
 @media print {
 
+  /* FORÇA OCULTAR TODOS OS BOTÕES NA IMPRESSÃO */
+  button,
+  .btn,
+  [id^="btn_"],
+  .actions {
+    display: none !important;
+    visibility: hidden !important;
+  }
+
   /* Remove tudo que é botão, inputs, textarea, ações */
   button,
   input,
