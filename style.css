@@ -133,6 +133,7 @@ body.pdf-mode * {
     overflow: visible !important;
 }
 
+/* Oculta elementos interativos */
 body.pdf-mode button,
 body.pdf-mode .btn,
 body.pdf-mode input,
@@ -141,15 +142,15 @@ body.pdf-mode .actions {
     display: none !important;
 }
 
-
 body.pdf-mode .container {
     padding: 20px;
 }
 body.pdf-mode .invoice {
     overflow: visible !important;
-    height: auto !important; }
+    height: auto !important;
+}
 
-
+/* Regras da Tabela */
 body.pdf-mode .table-wrapper {
     overflow-x: visible !important;
 }
@@ -162,16 +163,18 @@ body.pdf-mode th {
     width: 100% !important;
 }
 
-
+/* REFORÇO CRÍTICO: Impede quebra de página dentro de uma linha da tabela */
 body.pdf-mode #itens_body tr {
     page-break-inside: avoid !important;
     break-inside: avoid !important;
+    /* NOVO: Garante que cada TR seja um elemento de quebra de página */
+    display: table-row !important;
 }
 
-
+/* CONSOLIDAÇÃO: Garante que as células da tabela tenham altura flexível e mostrem o texto */
 body.pdf-mode td {
     display: table-cell !important;
-    height: auto !important; 
+    height: auto !important; /* CRÍTICO: Permite que a altura da linha seja calculada */
     vertical-align: top !important; 
 }
 
@@ -181,22 +184,22 @@ body.pdf-mode td span {
     padding: 0 !important;
 }
 
-
+/* Oculta a última coluna (Botão X) */
 body.pdf-mode table th:last-child {
     display: none !important;
 }
 
-
+/* Adiciona um respiro de segurança antes dos Totais */
 body.pdf-mode .totais {
     margin-top: 30px !important; 
     page-break-before: auto !important;
     page-break-after: auto !important;
 }
 
-
 body.pdf-mode label:has(+ textarea) {
     page-break-before: auto !important;
 }
+
                             /* IMPRESSAO EM A4 */
 
 /* Modo impressão A4 */
