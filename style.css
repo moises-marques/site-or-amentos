@@ -308,24 +308,60 @@ body {
       margin-top: 20px;
     }
   
-                                 /* PDF CELULAR */
+                                                        /* ============================================
+                          IMPRESSÃO A4 SEM BOTÕES / INPUTS / TEXTAREA
+                          ============================================ */
 
+                          
+@media print {
 
-  /* CORREÇÃO PARA PDF NO CELULAR */
-/* @media screen and (max-width: 900px) {
-  body.pdf-mode .table-wrapper {
-    overflow: visible !important;
+  /* Remove tudo que é botão, inputs, textarea, ações */
+  button,
+  input,
+  textarea,
+  .actions,
+  #btn_add,
+  #btn_reset,
+  #btn_whatsapp,
+  #btn_pdf,
+  #btn_print {
+    display: none !important;
+    visibility: hidden !important;
   }
 
-  body.pdf-mode table {
-    width: 100% !important;
-    display: block !important;
+  /* Oculta o label da mensagem */
+  label[for="mensagem"],
+  #mensagem {
+    display: none !important;
   }
 
-  body.pdf-mode tr, 
-  body.pdf-mode td, 
-  body.pdf-mode th {
-    white-space: normal !important;
-    height: auto !important;
+  /* Ajusta a tabela para impressão */
+  table, tr, td, th {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
   }
-} */
+
+  /* Impede corte de itens */
+  #itens_body tr {
+    page-break-inside: avoid !important;
+  }
+
+  /* Remove última coluna (botão X) */
+  table th:last-child,
+  table td:last-child {
+    display: none !important;
+  }
+
+  /* Ajusta container para tamanho A4 */
+  #invoice {
+    width: 210mm;
+    min-height: 297mm;
+    padding: 20mm;
+    margin: 0 auto;
+  }
+
+  body {
+    background: white !important;
+  }
+}
+

@@ -9,7 +9,6 @@ function atualizarTotais() {
     let subtotal = 0;
 
     document.querySelectorAll(".linha-item").forEach(row => {
-        // Usa `|| 0` para garantir que campos vazios sejam tratados como zero
         const qtd = parseFloat(row.querySelector(".qtd").value) || 0;
         const preco = parseFloat(row.querySelector(".preco").value) || 0;
 
@@ -58,100 +57,65 @@ document.getElementById("btn_reset").addEventListener("click", () => {
     atualizarTotais();
 });
 
-                   /* PDF DEFINITIVO (CORRIGIDO PARA PAGINAÇÃO E MODO CELULAR) */
+
+/* ============================================
+   PDF COM PAGINAÇÃO (NOVO BLOCO)
+   ============================================ */
 
 document.getElementById("btn_pdf").addEventListener("click", async () => {
-    const invoice = document.getElementById("invoice");
     document.body.classList.add("pdf-mode");
 
-    // 🌟 NOVO: PREPARAÇÃO DO LAYOUT PARA CAPTURA
-    // Substitui todos os inputs da tabela por elementos <span> com seu valor
-    document.querySelectorAll("#itens_body .linha-item").forEach(row => {
-        // Itera sobre todas as colunas de dados (Item, Qtd, Desc, Preco)
-        row.querySelectorAll('td:not(:last-child)').forEach(cell => {
-            const input = cell.querySelector('input');
-            if (input) {
-                // Cria um SPAN para o PDF e insere o valor do INPUT
-                const span = document.createElement('span');
-                span.innerText = input.value || input.placeholder; // Usa o valor ou o placeholder
-                
-                // Remove o input e insere o SPAN. O CSS no pdf-mode vai exibir este SPAN.
-                cell.innerHTML = '';
-                cell.appendChild(span);
-            }
-        });
+    const { jsPDF } = jspdf;
+    const pdf = new jsPDF("p", "mm", "a4");
 
-        // Oculta o botão 'X' (último <td>)
-        row.querySelector('.btn-del').parentElement.style.display = 'none';
+    const linhas = document.querySelectorAll("#itens_body tr");
+    const pageHeight = 297;
+    let y = 20;
+
+    // Cabeçalho simples
+    pdf.setFontSize(14);
+    pdf.text("Orçamento", 20, y);
+    y += 10;
+
+    // Lista de itens linha por linha
+    linhas.forEach((tr, index) => {
+        const texto = [...tr.querySelectorAll("td")]
+            .slice(0, 5) // Pega só as colunas úteis
+            .map(td => td.innerText.trim())
+            .join("   |   ");
+
+        pdf.setFontSize(11);
+
+        // Quebra de página automática
+        if (y > pageHeight - 20) {
+            pdf.addPage();
+            y = 20;
+        }
+
+        pdf.text(texto, 20, y);
+        y += 7;
     });
-    
-    // Oculta inputs de cabeçalho
-    document.querySelectorAll('.input-header-h2, .input-header-div').forEach(input => {
-        const span = document.createElement('span');
-        span.innerText = input.value || input.placeholder;
-        input.parentElement.appendChild(span);
-        input.style.display = 'none';
-    });
-    
-    // Oculta campos Cliente/Telefone
-    document.getElementById('cliente_nome').style.display = 'none';
-    document.getElementById('telefone').style.display = 'none';
-    document.getElementById('cliente_nome').parentElement.insertAdjacentHTML('beforeend', `<span>${document.getElementById('cliente_nome').value}</span>`);
-    document.getElementById('telefone').parentElement.insertAdjacentHTML('beforeend', `<span>${document.getElementById('telefone').value}</span>`);
-    
-    // Oculta botão "+ Adicionar item"
-    document.getElementById("btn_add").style.display = 'none';
-    
-    // Oculta o campo de mensagem interativo e mostra só o texto
-    const mensagem_input = document.getElementById('mensagem');
-    
-    mensagem_input.style.display = 'none';
-    mensagem_input.parentElement.insertAdjacentHTML('beforeend', `<p>${mensagem_input.value}</p>`);
 
+    // Totais
+    y += 10;
+    pdf.setFontSize(13);
+    pdf.text("Total: R$ " + document.getElementById("total").innerText, 20, y);
 
-    await new Promise(r => setTimeout(r, 500)); // Espera o layout estabilizar
-
-    // A CAPTURA VAI ACONTECER COM TODOS OS ITENS VISÍVEIS (expansão)
-    const canvas = await html2canvas(invoice, { scale: 2 });
-    
-    // 🌟 NOVO: REVERTE AS MUDANÇAS APÓS A CAPTURA
-    // Recarrega a página para resetar os inputs e botões para a próxima interação
-    window.location.reload(); 
-
-    // O restante do código PDF (jspdf)
-    const imgData = canvas.toDataURL("image/png");
-    const pdf = new jspdf.jsPDF("p", "pt", "a4");
-
-    const pageWidth = pdf.internal.pageSize.getWidth();
-    const imgWidth = pageWidth - 40;
-    const imgHeight = (canvas.height * imgWidth) / canvas.width;
-
-    // LÓGICA DE PAGINAÇÃO: Se a imagem for maior que o A4, ele adiciona páginas
-    let heightLeft = imgHeight;
-    let position = 20;
-
-    pdf.addImage(imgData, "PNG", 20, position, imgWidth, imgHeight);
-    heightLeft -= pdf.internal.pageSize.getHeight();
-
-    while (heightLeft >= 0) {
-        position = heightLeft - imgHeight;
-        pdf.addPage();
-        pdf.addImage(imgData, "PNG", 20, position, imgWidth, imgHeight);
-        heightLeft -= pdf.internal.pageSize.getHeight();
-    }
-    
     pdf.save("orcamento.pdf");
+    document.body.classList.remove("pdf-mode");
 });
 
-                                       /* IMPRESSÃO A4 */
+
+
+/* ============================================
+   IMPRESSÃO A4
+   ============================================ */
 
 document.getElementById("btn_print").addEventListener("click", () => {
     const invoice = document.getElementById("invoice");
 
-    // Adiciona classe especial para impressão
     document.body.classList.add("print-mode");
 
-    // Garante que o layout está atualizado antes de abrir o print
     setTimeout(() => {
         window.print();
         document.body.classList.remove("print-mode");
