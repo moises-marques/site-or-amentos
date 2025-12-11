@@ -132,3 +132,19 @@ document.getElementById("btn_whatsapp").addEventListener("click", () => {
 
     window.open(`https://wa.me/?text=${encodeURIComponent(texto)}`);
 });
+
+
+//                        DO BOTÃO startPayment
+
+async function startPayment() {
+  const res = await fetch('/create-payment', {
+    method: 'POST',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({ amount: 19.90, source: 'pro-page' })
+  });
+  const data = await res.json();
+  window.location.href = data.payment_url;
+}
+
+                            
+
